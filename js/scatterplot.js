@@ -26,10 +26,9 @@
 
     const cleanData = data.filter(d => !isNaN(d.star) && !isNaN(d.energy) && d.energy > 0);
 
-    // Give right edge padding (8.5) so points don't clip the right axis
     const maxStar = d3.max(cleanData, d => d.star) || 8;
     const x = d3.scaleLinear()
-      .domain([0, maxStar + 0.5])
+      .domain([0, maxStar + 0.6])
       .range([0, width]);
 
     const y = d3.scaleLinear()
@@ -69,33 +68,33 @@
       .attr("text-anchor", "middle")
       .text("Annual Energy Consumption (kWh)");
 
-    // Plot circles with deterministic micro-jitter to unpack vertical stripes
+    // Circles: Smaller radius (2.5px), lighter opacity (0.28), no stroke border
     svg.selectAll("circle")
       .data(cleanData)
       .enter()
       .append("circle")
       .attr("cx", (d, i) => {
-        // Small pseudo-random offset (-0.12 to +0.12) to unpack identical ratings
-        const jitter = Math.sin(i * 999) * 0.12;
+        // Deterministic jitter between -0.16 and +0.16
+        const jitter = Math.sin(i * 1234.56) * 0.16;
         return x(d.star + jitter);
       })
       .attr("cy", d => y(d.energy))
-      .attr("r", 4)
-      .attr("fill", "#3b82f6")
-      .attr("opacity", 0.45)
-      .attr("stroke", "#1d4ed8")
-      .attr("stroke-width", 0.6)
+      .attr("r", 2.6)               // Smaller size leaves breathing room between points
+      .attr("fill", "#2563eb")       // Vibrant blue
+      .attr("opacity", 0.3)          // Transparency reveals density gradients
+      .style("pointer-events", "all")
       .on("mouseover", function () {
         d3.select(this)
-          .attr("r", 6)
+          .raise()                   // Bring hovered element to front
+          .attr("r", 5)
           .attr("opacity", 1)
-          .attr("fill", "#0284c7");
+          .attr("fill", "#ea580c");  // Highlight in orange on hover
       })
       .on("mouseout", function () {
         d3.select(this)
-          .attr("r", 4)
-          .attr("opacity", 0.45)
-          .attr("fill", "#3b82f6");
+          .attr("r", 2.6)
+          .attr("opacity", 0.3)
+          .attr("fill", "#2563eb");
       });
   }).catch(err => console.error("Scatter plot load error:", err));
 })();
