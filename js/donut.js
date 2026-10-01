@@ -20,8 +20,8 @@
     };
 
     data.forEach(d => {
-      d.tech = getVal(d, ["Screen_Technology", "Screen_Type", "Technology", "Type"]);
-      d.value = +getVal(d, ["Energy_Consumption", "Total_Energy", "Energy", "Count", "Mean_Energy"]);
+      d.tech = getVal(d, ["Screen_Tech", "Screen_Type", "Technology", "Type"]);
+      d.value = +getVal(d, ["Energy_Consumption", "Total_Energy", "Energy", "Count", "Mean"]);
     });
 
     const pie = d3.pie().value(d => d.value).sort(null);
