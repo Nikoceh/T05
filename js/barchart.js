@@ -1,5 +1,5 @@
 (function () {
-  const margin = { top: 30, right: 30, bottom: 60, left: 60 };
+  const margin = { top: 35, right: 30, bottom: 50, left: 65 };
   const width = 600 - margin.left - margin.right;
   const height = 380 - margin.top - margin.bottom;
 
@@ -24,39 +24,50 @@
       d.energy = +getVal(d, ["Energy_Consumption", "Mean_Energy", "Average_Energy", "kWh", "Mean"]);
     });
 
+    const cleanData = data.filter(d => d.tech && !isNaN(d.energy));
+    cleanData.sort((a, b) => a.energy - b.energy);
+
     const x = d3.scaleBand()
-      .domain(data.map(d => d.tech))
+      .domain(cleanData.map(d => d.tech))
       .range([0, width])
-      .padding(0.35);
+      .padding(0.42);
 
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.energy) * 1.15 || 500])
+      .domain([0, d3.max(cleanData, d => d.energy) * 1.2 || 500])
       .range([height, 0]);
 
-    // X-Axis
+    // Gridlines
+    svg.append("g")
+      .attr("class", "grid")
+      .attr("stroke", "#f1f5f9")
+      .attr("stroke-dasharray", "2,2")
+      .call(d3.axisLeft(y).tickSize(-width).tickFormat(""));
+
+    // X Axis
     svg.append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x))
       .selectAll("text")
-      .attr("transform", "rotate(-20)")
-      .attr("text-anchor", "end")
-      .attr("font-size", "11px");
+      .attr("font-size", "12px")
+      .attr("font-weight", "500")
+      .attr("dy", "1em");
 
-    // Y-Axis
+    // Y Axis
     svg.append("g")
       .call(d3.axisLeft(y).ticks(6))
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("x", -height / 2)
-      .attr("y", -45)
+      .attr("y", -48)
       .attr("fill", "#475569")
       .attr("font-size", "12px")
+      .attr("font-weight", "500")
       .attr("text-anchor", "middle")
       .text("Mean Energy Consumption (kWh)");
 
     // Bars
     svg.selectAll(".bar")
-      .data(data)
+      .data(cleanData)
       .enter()
       .append("rect")
       .attr("class", "bar")
@@ -65,6 +76,20 @@
       .attr("width", x.bandwidth())
       .attr("height", d => height - y(d.energy))
       .attr("fill", "#0284c7")
-      .attr("rx", 3);
+      .attr("rx", 4);
+
+    // Value labels above bars
+    svg.selectAll(".bar-label")
+      .data(cleanData)
+      .enter()
+      .append("text")
+      .attr("class", "bar-label")
+      .attr("x", d => x(d.tech) + x.bandwidth() / 2)
+      .attr("y", d => y(d.energy) - 8)
+      .attr("text-anchor", "middle")
+      .attr("font-size", "12px")
+      .attr("font-weight", "600")
+      .attr("fill", "#0f172a")
+      .text(d => `${d.energy.toFixed(1)} kWh`);
   }).catch(err => console.error("Bar chart load error:", err));
 })();
