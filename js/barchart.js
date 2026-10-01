@@ -36,13 +36,6 @@
       .domain([0, d3.max(cleanData, d => d.energy) * 1.2 || 500])
       .range([height, 0]);
 
-    // Gridlines
-    svg.append("g")
-      .attr("class", "grid")
-      .attr("stroke", "#f1f5f9")
-      .attr("stroke-dasharray", "2,2")
-      .call(d3.axisLeft(y).tickSize(-width).tickFormat(""));
-
     // X Axis
     svg.append("g")
       .attr("transform", `translate(0,${height})`)
