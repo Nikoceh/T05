@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T05: Multi-Chart Webpage | Data Visualisation</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- D3.js v7 CDN -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Energy Consumption & Market Dynamics</h1>
+    <p class="subtitle">An analytical exploration of television energy efficiency and Australian spot power price trends.</p>
+  </header>
+
+  <main class="chart-grid">
+    <!-- Chart 1: Scatter Plot -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Energy Consumption vs. Star Rating</h2>
+        <p>Exploring the correlation between star ratings and total energy consumption across TV models.</p>
+      </div>
+      <div id="chart-scatter" class="chart-container"></div>
+    </section>
+
+    <!-- Chart 2: Donut Chart -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Screen Technologies (All Sizes)</h2>
+        <p>Proportion of total energy consumption grouped across all TV screen types.</p>
+      </div>
+      <div id="chart-donut" class="chart-container"></div>
+    </section>
+
+    <!-- Chart 3: Bar Chart -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Screen Technologies (55-Inch Models)</h2>
+        <p>Comparison of energy consumption across screen categories for standard 55" displays.</p>
+      </div>
+      <div id="chart-bar" class="chart-container"></div>
+    </section>
+
+    <!-- Chart 4: Line Chart -->
+    <section class="card">
+      <div class="card-header">
+        <h2>Spot Power Prices (1998 – 2024)</h2>
+        <p>Historical trends in regional and average Australian wholesale spot electricity prices.</p>
+      </div>
+      <div id="chart-line" class="chart-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>COS30045 Data Visualisation • Tutorial 05</p>
+  </footer>
+
+  <!-- Individual chart scripts -->
+  <script src="js/scatterplot.js"></script>
+  <script src="js/donut.js"></script>
+  <script src="js/barchart.js"></script>
+  <script src="js/linechart.js"></script>
+</body>
+</html>
