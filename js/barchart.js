@@ -20,8 +20,8 @@
     };
 
     data.forEach(d => {
-      d.tech = getVal(d, ["Screen_Technology", "Screen_Type", "Technology", "Type"]);
-      d.energy = +getVal(d, ["Energy_Consumption", "Mean_Energy", "Average_Energy", "kWh"]);
+      d.tech = getVal(d, ["Screen_Tech", "Screen_Type", "Technology", "Type"]);
+      d.energy = +getVal(d, ["Energy_Consumption", "Mean_Energy", "Average_Energy", "kWh", "Mean"]);
     });
 
     const x = d3.scaleBand()
