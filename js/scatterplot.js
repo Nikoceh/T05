@@ -22,7 +22,7 @@
 
     data.forEach(d => {
       d.star = +getVal(d, ["Star2", "Star", "Star_Rating", "Stars"]);
-      d.energy = +getVal(d, ["Energy_Consumption", "Energy", "Labelled_Energy", "kWh"]);
+      d.energy = +getVal(d, ["Energy_Consumpt", "Energy", "Labelled_Energy", "kWh"]);
     });
 
     const cleanData = data.filter(d => !isNaN(d.star) && !isNaN(d.energy));
